@@ -1,2 +1,3 @@
 # drf-api
-this is first Django Rest APi
+this is Django Rest APi for WhatsAppNotify
+
