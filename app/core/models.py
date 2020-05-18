@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from phone_field import PhoneField
 
 # Create your models here.
 
@@ -37,14 +38,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     """ Custom user models that supports email and phonenumber instead of database """
 
     email = models.EmailField(max_length=255, unique=True)
-    phone_number = models.IntegerField()
+    phone_number = PhoneField(help_text="WhatsApp phone number")
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = UserManager()
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["phone_number"]
 
     @property
     def is_staff(self):
