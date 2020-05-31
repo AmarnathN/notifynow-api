@@ -4,7 +4,10 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
-from phone_field import PhoneField
+
+# from phone_field import PhoneField
+from django.contrib.postgres.fields import JSONField
+from django.conf import settings
 
 # Create your models here.
 
@@ -38,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """ Custom user models that supports email and phonenumber instead of database """
 
     email = models.EmailField(max_length=255, unique=True)
-    phone_number = PhoneField(help_text="WhatsApp phone number")
+    phone_number = models.CharField(max_length=15)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -52,3 +55,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class UserMail(models.Model):
+    """ The mails received for the user """
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    user_mail = JSONField()
+
+    def __str__(self):
+        return self.name

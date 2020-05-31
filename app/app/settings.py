@@ -25,7 +25,7 @@ SECRET_KEY = "(e!q!ahdzy=i#r=558$ooh3_9!*$bk4cubwy$e5*h0u1*3aytu"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["1456833cf4a3.ngrok.io", "localhost"]
 
 
 # Application definition
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "core",
     "user",
     "phone_field",
+    "user_mail",
+    "notify",
 ]
 
 MIDDLEWARE = [
