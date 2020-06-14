@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "phone_field",
     "user_mail",
     "notify",
+    "netflix_profile",
 ]
 
 MIDDLEWARE = [

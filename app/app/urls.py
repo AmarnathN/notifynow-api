@@ -18,7 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/user/", include("user.urls")),
+    path("api/users/", include("user.urls")),
     path("api/user_mail/", include("user_mail.urls")),
     path("api/notify/", include("notify.urls")),
+    path("api/", include("netflix_profile.urls")),
 ]

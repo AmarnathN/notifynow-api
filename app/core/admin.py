@@ -30,3 +30,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.UserMail)
+admin.site.register(models.NetflixProfile)

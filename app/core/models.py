@@ -65,3 +65,19 @@ class UserMail(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class NetflixProfile(models.Model):
+    """ The mails received for the user """
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    profile = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=15)
+    last_updated = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ["user", "profile"]
+        ordering = ["user"]
+
+    def __str__(self):
+        return self.user.email + " - " + self.profile

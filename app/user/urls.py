@@ -4,7 +4,7 @@ from user import views
 app_name = "user"
 
 urlpatterns = [
-    path("create/", views.CreateUserView.as_view(), name="create"),
+    path("", views.UsersView.as_view()),
+    path("<int:id>/", views.UpdateUserView.as_view(), name="update"),
     path("token/", views.CreateTokenView.as_view(), name="token"),
-    path("manage/", views.ManageUserView.as_view(), name="manage"),
 ]
