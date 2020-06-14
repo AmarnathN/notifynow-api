@@ -5,5 +5,5 @@ django-phone-field
 flake8>=3.6.0,<3.7.0
 twilio==6.39.0
 gunicorn==20.0.4
-whitenose==5.0.1
+whitenose
 
