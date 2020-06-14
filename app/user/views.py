@@ -5,13 +5,13 @@ from rest_framework.settings import api_settings
 from core.models import User
 
 # Create your views here.
-# class CreateUserView(generics.CreateAPIView):
-#     """ Create a new user in the system """
+class CreateUserView(generics.CreateAPIView):
+    """ Create a new user in the system """
 
-#     serializer_class = UserSerializer
+    serializer_class = UserSerializer
 
 
-class UsersView(generics.ListCreateAPIView):
+class ListUsersView(generics.ListAPIView):
     """ Create a new user in the system """
 
     serializer_class = UserSerializer
