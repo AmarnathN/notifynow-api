@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "(e!q!ahdzy=i#r=558$ooh3_9!*$bk4cubwy$e5*h0u1*3aytu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["notifynow-api.herokuapp.com", "localhost"]
-
+# ALLOWED_HOSTS = ["notifynow-api.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "app.urls"
@@ -92,6 +93,15 @@ DATABASES = {
     }
 }
 
+"""
+Heroku database settings. 
+"""
+
+import dj_database_url
+
+db_from_env = dj_database_url.config()
+DATABASES["default"].update(db_from_env)
+DATABASES["default"]["CONN_MAX_AGE"] = 500
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -125,6 +135,8 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # custom user model
 
