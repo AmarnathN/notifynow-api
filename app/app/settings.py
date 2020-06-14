@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "(e!q!ahdzy=i#r=558$ooh3_9!*$bk4cubwy$e5*h0u1*3aytu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["1456833cf4a3.ngrok.io", "localhost"]
+ALLOWED_HOSTS = ["notifynow-api.herokuapp.com", "localhost"]
 
 
 # Application definition
