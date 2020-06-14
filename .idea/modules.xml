@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/drf-api.iml" filepath="$PROJECT_DIR$/.idea/drf-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/notifynow-api.iml" filepath="$PROJECT_DIR$/.idea/notifynow-api.iml" />
     </modules>
   </component>
 </project>
