@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "notify",
     "netflix_profile",
     "consent",
+    "forward_mail_id",
 ]
 
 MIDDLEWARE = [
