@@ -83,9 +83,10 @@ class NetflixProfile(models.Model):
         return self.user.email + " - " + self.profile
 
 
-class Consents(model.Model):
+class Consent(models.Model):
     """ The User consents for Notify """
 
+    # need to update as on-to-one field
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
     )
@@ -99,9 +100,10 @@ class Consents(model.Model):
         return self.user.email
 
 
-class ForwardMailId(model.Model):
+class ForwardMailId(models.Model):
     """ The User consents for Notify """
 
+    # need to update as on-to-one field
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
     )

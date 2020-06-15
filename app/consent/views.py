@@ -1,18 +1,18 @@
 from rest_framework import generics, mixins
-from .serializers import NetflixProfileSerializer
+from .serializers import ConsentSerializer
 from rest_framework.authentication import (
     SessionAuthentication,
     BasicAuthentication,
 )
 from rest_framework.permissions import IsAuthenticated
-from core.models import NetflixProfile
+from core.models import Consent
 
 # Create your views here.
-class NetflixProfileAPIView(
+class ConsentAPIView(
     generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
 ):
-    serializer_class = NetflixProfileSerializer
-    queryset = NetflixProfile.objects.all()
+    serializer_class = ConsentSerializer
+    queryset = Consent.objects.all()
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -24,14 +24,14 @@ class NetflixProfileAPIView(
 
 
 # Update your views here.
-class NetflixProfileDetailsAPIView(
+class ConsentDetailsAPIView(
     generics.GenericAPIView,
     mixins.UpdateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.DestroyModelMixin,
 ):
-    serializer_class = NetflixProfileSerializer
-    queryset = NetflixProfile.objects.all()
+    serializer_class = ConsentSerializer
+    queryset = Consent.objects.all()
     lookup_field = "id"
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
