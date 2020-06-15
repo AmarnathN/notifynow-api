@@ -68,7 +68,7 @@ class UserMail(models.Model):
 
 
 class NetflixProfile(models.Model):
-    """ The mails received for the user """
+    """ The Netflix Profiles of the user """
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
     profile = models.CharField(max_length=255)
@@ -81,3 +81,35 @@ class NetflixProfile(models.Model):
 
     def __str__(self):
         return self.user.email + " - " + self.profile
+
+
+class Consents(model.Model):
+    """ The User consents for Notify """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
+    )
+    netflix_whatsapp = models.BooleanField(default=True)
+    netflix_chrome_ext = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["user"]
+
+    def __str__(self):
+        return self.user.email
+
+
+class ForwardMailId(model.Model):
+    """ The User consents for Notify """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
+    )
+    gmail_fwd_mail = models.EmailField(max_length=255)
+
+    class Meta:
+        unique_together = ["user", "gmail_fwd_mail"]
+        ordering = ["user"]
+
+    def __str__(self):
+        return self.user.email
