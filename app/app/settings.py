@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "netflix_profile",
     "consent",
     "forward_mail_id",
-    "corsheaders",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
@@ -152,6 +152,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {                          
     "DEFAULT_PERMISSION_CLASSES":
-        ['rest_framework.authentication.TokenAuthentication'],                          
+        ['rest_framework.authentication.AllowAny'],                          
     "DEFAULT_PARSER_CLASSES":["rest_framework.parsers.JSONParser",],                    
     }
