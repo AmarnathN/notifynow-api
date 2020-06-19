@@ -3,6 +3,7 @@ from .serializers import ForwardMailIdSerializer
 from rest_framework.authentication import (
     SessionAuthentication,
     BasicAuthentication,
+    TokenAuthentication,
 )
 from rest_framework.permissions import IsAuthenticated
 from core.models import ForwardMailId
@@ -13,7 +14,7 @@ class ForwardMailIdAPIView(
 ):
     serializer_class = ForwardMailIdSerializer
     queryset = ForwardMailId.objects.all()
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

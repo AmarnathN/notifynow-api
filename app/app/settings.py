@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "netflix_profile",
     "consent",
     "forward_mail_id",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # new 
 ]
 
 ROOT_URLCONF = "app.urls"
@@ -144,3 +146,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # custom user model
 
 AUTH_USER_MODEL = "core.user"
+
+# Allows any client access.                      
+CORS_ORIGIN_ALLOW_ALL = True  
+
+REST_FRAMEWORK = {                          
+    "DEFAULT_PERMISSION_CLASSES":
+        ['rest_framework.authentication.TokenAuthentication'],                          
+    "DEFAULT_PARSER_CLASSES":["rest_framework.parsers.JSONParser",],                    
+    }

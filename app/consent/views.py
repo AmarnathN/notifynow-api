@@ -3,6 +3,7 @@ from .serializers import ConsentSerializer
 from rest_framework.authentication import (
     SessionAuthentication,
     BasicAuthentication,
+    TokenAuthentication,
 )
 from rest_framework.permissions import IsAuthenticated
 from core.models import Consent
@@ -13,7 +14,7 @@ class ConsentAPIView(
 ):
     serializer_class = ConsentSerializer
     queryset = Consent.objects.all()
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -33,7 +34,7 @@ class ConsentDetailsAPIView(
     serializer_class = ConsentSerializer
     queryset = Consent.objects.all()
     lookup_field = "id"
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id=None):
