@@ -18,6 +18,10 @@ class NotifyView(views.APIView):
             sender = data.get("sender")
             print("Sender : {} ".format(sender))
             user = list(User.objects.filter(email=sender).values())[0]
+            userMail = UserMail(
+                    user=User.objects.get(email=sender), user_mail=json.dumps(data)
+                )
+            userMail.save()
             if "is now on Netflix".lower() in mail_subject.lower():
                 client = Client(account_sid, auth_token)
                 message = client.messages.create(
@@ -29,15 +33,11 @@ class NotifyView(views.APIView):
                     to="whatsapp:{}".format(user["phone_number"]),
                 )
                 print(
-                    "notify mail from netflix has been whatsapped to {} !!!".format(
+                    "notify mail from netflix has been whatsapped to {} !!! and mail samed to user mails".format(
                         sender
                     )
                 )
             else:
-                userMail = UserMail(
-                    user=User.objects.get(email=sender), user_mail=json.dumps(data)
-                )
-                userMail.save()
                 print(
                     "not valid notify mail from netflix, saved in {} mails".format(
                         sender
