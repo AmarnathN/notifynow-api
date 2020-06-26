@@ -115,3 +115,16 @@ class ForwardMailId(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+class UserApp(models.Model):
+    """ The Apps for the user """
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    app = models.CharField(max_length=32)
+
+    class Meta:
+        unique_together = ["user", "app"]
+
+    def __str__(self):
+        return self.app

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     "netflix_profile",
     "consent",
     "forward_mail_id",
-    "corsheaders"
+    "user_app",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
