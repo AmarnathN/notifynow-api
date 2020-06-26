@@ -89,8 +89,8 @@ class UserApp(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
     app = models.CharField(max_length=32)
 
-    class Meta:
-        unique_together = ["user", "app"]
+    # class Meta:
+    #     unique_together = ["user", "app"]
 
     def __str__(self):
         return self.app
@@ -105,7 +105,7 @@ class Consent(models.Model):
     chrome_ext = models.BooleanField(default=True)
 
     class Meta:
-        unique_together = ["user", "app"]
+        # unique_together = ["user", "app"]
         ordering = ["user"]
 
     def __str__(self):
