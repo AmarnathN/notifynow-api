@@ -24,5 +24,4 @@ urlpatterns = [
     path("api/netflix_profiles/", include("netflix_profile.urls")),
     path("api/consents/", include("consent.urls")),
     path("api/forward_mail_ids/", include("forward_mail_id.urls")),
-    path("api/user_apps/",include('user_app.urls')),
 ]
