@@ -83,29 +83,17 @@ class NetflixProfile(models.Model):
         return self.user.email + " - " + self.profile
 
 
-class UserApp(models.Model):
-    """ The Apps for the user """
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
-    app = models.CharField(max_length=32)
-
-    class Meta:
-        unique_together = ["user", "app"]
-
-    def __str__(self):
-        return self.app
-
 class Consent(models.Model):
     """ The User consents for Notify """
 
     # need to update as on-to-one field
-    user = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete=models.CASCADE )
-    app = models.ForeignKey( UserApp, related_name='app', on_delete=models.CASCADE )
-    whatsapp = models.BooleanField(default=True)
-    chrome_ext = models.BooleanField(default=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
+    )
+    netflix_whatsapp = models.BooleanField(default=True)
+    netflix_chrome_ext = models.BooleanField(default=True)
 
     class Meta:
-        unique_together = ["user", "app"]
         ordering = ["user"]
 
     def __str__(self):
@@ -127,3 +115,16 @@ class ForwardMailId(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+class UserApp(models.Model):
+    """ The Apps for the user """
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    app = models.CharField(max_length=32)
+
+    class Meta:
+        unique_together = ["user", "app"]
+
+    def __str__(self):
+        return self.app
