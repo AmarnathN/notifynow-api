@@ -3,7 +3,7 @@ from core.models import UserApp
 
 
 class UserAppSerializer(serializers.ModelSerializer):
-    """ Serializer for User App objetcs """
+    """ Serializer for User mail objetcs """
 
     class Meta:
         model = UserApp
