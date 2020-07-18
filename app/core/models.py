@@ -90,8 +90,8 @@ class Consent(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
     )
-    netflix_whatsapp = models.BooleanField(default=True)
-    netflix_chrome_ext = models.BooleanField(default=True)
+    whatsapp = models.BooleanField(default=True)
+    chrome_ext = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["user"]
@@ -115,3 +115,4 @@ class ForwardMailId(models.Model):
 
     def __str__(self):
         return self.user.email
+
