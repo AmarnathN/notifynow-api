@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "netflix_profile",
     "consent",
     "forward_mail_id",
+    "notification",
     "corsheaders"
 ]
 
