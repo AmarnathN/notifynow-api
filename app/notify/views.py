@@ -5,14 +5,17 @@ from twilio.rest import Client
 import json
 import sys
 import os
+from bs4 import BeautifulSoup
 
 
 class NotifyView(views.APIView):
     # permission_classes = []
 
     def post(self, request):
-        account_sid = os.getenv("TWILIO_SID")
-        auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+        # account_sid = os.getenv("TWILIO_SID")
+        # auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+        account_sid = "ACa901daa5cf6b551ecc61187d3fc3f027"
+        auth_token = "e039423bbfea2cf6a8128ed2de38c67a"
         try:
             data = request.data
             mail_subject = data.get("subject")
@@ -47,26 +50,39 @@ class NotifyView(views.APIView):
                         user=user, mail_from=sender, user_mail=json.dumps(data)
                     )
                 userMail.save()
-
+            html_data = data.get('stripped-html')
+            soup = BeautifulSoup(html_data,'html.parser')
             if "is now on Netflix".lower() in mail_subject.lower():
+                header_elem = soup.select('[class*="-header-copy"]')[0]
+                profile = header_elem.get_text().strip().replace("For ","")
+                # print("profile : {}".format(profile))
+                
+                main_link_elem = soup.select('[class*="-component-image-cell"] a')[0]
+                notifcation_link = main_link_elem['href']
+                # print("notifcation_link : {}".format(notifcation_link))
+
+                main_img_elem = soup.select('[class*="-component-image-cell"] img')[0]
+                notifcation_img = main_img_elem['src']
+                # print("notifcation_img : {}".format(notifcation_img))
+
+                message_body = "{} \nPlease find the link: \n{}".format(mail_subject, notifcation_link)
                 client = Client(account_sid, auth_token)
+                
                 message = client.messages.create(
-                    media_url=[
-                        "https://www.gannett-cdn.com/presto/2019/07/24/USAT/4cb62745-ee53-4eca-8905-c34f0da4faf7-VPC_COMING_TO_NETFLIX_AUG_DESK_THUMB.00_00_23_11.Still002.jpg?width=1320&height=744&fit=crop&format=pjpg&auto=webp"
-                    ],
+                    media_url=[notifcation_img],
                     from_="whatsapp:+14155238886",
-                    body=(mail_subject),
+                    body=(message_body),
                     to="whatsapp:{}".format(user.phone_number),
                 )
                 print(
-                    "notify mail from netflix has been whatsapped to {} !!! and mail samed to user mails".format(
+                    "notify mail from netflix has been whatsapped to {} !!! and mail saved to user mails".format(
                         sender
                     )
                 )
             else:
                 print(
                     "not valid notify mail from netflix, saved in {} mails".format(
-                        sender
+                        userMail.user.email
                     )
                 )
 
