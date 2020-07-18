@@ -7,4 +7,4 @@ class UserMailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserMail
-        fields = ("id", "user", "user_mail")
+        fields = ields = "__all__"
