@@ -83,6 +83,17 @@ class NetflixProfile(models.Model):
         return self.user.email + " - " + self.profile
 
 
+class Notification(models.Model):
+    """ The Notification type for Notify """
+
+    notification_type = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ["notification_type"]
+
+    def __str__(self):
+        return self.notification_type
+
 class Consent(models.Model):
     """ The User consents for Notify """
 
@@ -90,6 +101,7 @@ class Consent(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
     )
+    notification_type = models.ForeignKey(Notification, default=1, related_name='type', on_delete=models.CASCADE )
     whatsapp = models.BooleanField(default=True)
     chrome_ext = models.BooleanField(default=True)
 
