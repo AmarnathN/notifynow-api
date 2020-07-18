@@ -61,10 +61,11 @@ class UserMail(models.Model):
     """ The mails received for the user """
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    mail_from = models.EmailField(max_length=255, blank=True, null= True)
     user_mail = JSONField()
 
     def __str__(self):
-        return self.name
+        return self.user.email + ' - ' + str(self.mail_from)
 
 
 class NetflixProfile(models.Model):

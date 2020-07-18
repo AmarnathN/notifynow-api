@@ -1,9 +1,10 @@
 from rest_framework import views
 from rest_framework.response import Response
-from core.models import User, UserMail
+from core.models import User, UserMail, ForwardMailId
 from twilio.rest import Client
 import json
 import sys
+import os
 
 
 class NotifyView(views.APIView):
@@ -17,11 +18,36 @@ class NotifyView(views.APIView):
             mail_subject = data.get("subject")
             sender = data.get("sender")
             print("Sender : {} ".format(sender))
-            user = list(User.objects.filter(email=sender).values())[0]
-            userMail = UserMail(
-                    user=User.objects.get(email=sender), user_mail=json.dumps(data)
-                )
-            userMail.save()
+            print(mail_subject)
+            SECRET_KEY = os.getenv("ENV_KEY")
+            print(SECRET_KEY)
+            users = list(User.objects.filter(email=sender).values())
+            if("Gmail Forwarding Confirmation" in mail_subject  ):
+                subject_array = mail_subject.split()
+                email_from = subject_array[ len(subject_array) - 1 ]
+                user = User.objects.get(email=email_from)
+                if(user):
+                    userMail = UserMail(user=user, mail_from=sender, user_mail=json.dumps(data))
+                    userMail.save()
+                else:
+                    print("Anonymous mail")
+                    return Response({"success": False})
+            elif ("+caf_=vayu=notifynow.in" in sender ):
+                sender = sender.replace("+caf_=vayu=notifynow.in","")
+                user = User.objects.get(email=sender)
+                if(user):
+                    userMail = UserMail(user=user, mail_from=sender, user_mail=json.dumps(data))
+                    userMail.save()
+                else:
+                    print("Anonymous mail")
+                    return Response({"success": False})
+            else:
+                user = User.objects.get(email=sender)
+                userMail = UserMail(
+                        user=user, mail_from=sender, user_mail=json.dumps(data)
+                    )
+                userMail.save()
+
             if "is now on Netflix".lower() in mail_subject.lower():
                 client = Client(account_sid, auth_token)
                 message = client.messages.create(
@@ -30,7 +56,7 @@ class NotifyView(views.APIView):
                     ],
                     from_="whatsapp:+14155238886",
                     body=(mail_subject),
-                    to="whatsapp:{}".format(user["phone_number"]),
+                    to="whatsapp:{}".format(user.phone_number),
                 )
                 print(
                     "notify mail from netflix has been whatsapped to {} !!! and mail samed to user mails".format(
