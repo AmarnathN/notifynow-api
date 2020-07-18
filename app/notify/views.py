@@ -11,8 +11,8 @@ class NotifyView(views.APIView):
     # permission_classes = []
 
     def post(self, request):
-        account_sid = "AC26655be2355e4c0ee534631e5376092a"
-        auth_token = "dc70288083ae78b1a63be865bf573838"
+        account_sid = os.getenv("TWILIO_SID")
+        auth_token = os.getenv("TWILIO_AUTH_TOKEN")
         try:
             data = request.data
             mail_subject = data.get("subject")
