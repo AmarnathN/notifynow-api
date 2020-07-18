@@ -106,10 +106,11 @@ class Consent(models.Model):
     chrome_ext = models.BooleanField(default=True)
 
     class Meta:
+        unique_together = ["user", "notification_type"]
         ordering = ["user"]
 
     def __str__(self):
-        return self.user.email
+        return self.user.email + " - " + self.notification_type.notification_type
 
 
 class ForwardMailId(models.Model):
