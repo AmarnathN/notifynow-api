@@ -4,7 +4,7 @@ from user_mail import views
 
 
 router = DefaultRouter()
-router.register("user_mails", views.UserMailViewSet)
+router.register("", views.UserMailViewSet)
 
 app_name = "user_mail"
 
