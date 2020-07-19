@@ -100,8 +100,7 @@ class Consent(models.Model):
 
     # need to update as on-to-one field
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True
-    )
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     notification_type = models.ForeignKey(Notification, default=1, related_name='type', on_delete=models.CASCADE )
     whatsapp = models.BooleanField(default=True)
     chrome_ext = models.BooleanField(default=True)
