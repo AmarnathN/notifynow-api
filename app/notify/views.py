@@ -73,7 +73,7 @@ class NotifyView(views.APIView):
                 notifcation_img = main_link_elem.find('img')['src']
                 print("notifcation_img : {}".format(notifcation_img))
 
-                message_body = "{} \n\nPlease find the Show @ \n\n\n{}".format(mail_subject, notifcation_link)
+                message_body = "{} \n\nPlease find the Show @ \n\nDear {},\n{}".format(mail_subject,profile, notifcation_link)
                 client = Client(account_sid, auth_token)
                 
                 message = client.messages.create(
