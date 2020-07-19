@@ -42,26 +42,36 @@ class NotifyView(views.APIView):
                 else:
                     print("Anonymous mail")
                     return Response({"success": False})
-            else:
+            elif(len(users)>0):
                 user = User.objects.get(email=sender)
                 userMail = UserMail(
                         user=user, mail_from=sender, user_mail=json.dumps(data)
                     )
                 userMail.save()
+            else:
+                print("Anonymous mail")
+                user = User.objects.get(email="anonymous@gmail.com")
+                userMail = UserMail(
+                        user=user, mail_from=sender, user_mail=json.dumps(data)
+                    )
+                return Response({"success": False})
+                
             html_data = data.get('stripped-html')
             soup = BeautifulSoup(html_data,'html.parser')
-            if "is now on Netflix".lower() in mail_subject.lower():
-                header_elem = soup.select('[class*="-header-copy"]')[0]
-                profile = header_elem.get_text().strip().replace("For ","")
-                # print("profile : {}".format(profile))
-                
-                main_link_elem = soup.select('[class*="-component-image-cell"] a')[0]
-                notifcation_link = main_link_elem['href']
-                # print("notifcation_link : {}".format(notifcation_link))
 
-                main_img_elem = soup.select('[class*="-component-image-cell"] img')[0]
-                notifcation_img = main_img_elem['src']
-                # print("notifcation_img : {}".format(notifcation_img))
+            if "is now on Netflix".lower() in mail_subject.lower():
+                # print(soup.prettify())
+                header_elem = soup.select('[id*="-header-copy"]')
+                profile = header_elem[0].get_text().strip().replace("For ","")
+                print("profile : {}".format(profile))
+                
+                main_link_elem = soup.select('a[href*="PRIMARY_HERO_IMAGE"]')[0]
+                notifcation_link = main_link_elem['href']
+                print("notifcation_link : {}".format(notifcation_link))
+
+                # main_img_elem = soup.select('[class*="-component-image-cell"] img')[0]
+                notifcation_img = main_link_elem.find('img')['src']
+                print("notifcation_img : {}".format(notifcation_img))
 
                 message_body = "{} \n\nPlease find the Show @ \n\n\n{}".format(mail_subject, notifcation_link)
                 client = Client(account_sid, auth_token)
