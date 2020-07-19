@@ -14,8 +14,8 @@ class ConsentAPIView(
 ):
     serializer_class = ConsentSerializer
     queryset = Consent.objects.all()
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         return self.list(request)
@@ -34,8 +34,8 @@ class ConsentDetailsAPIView(
     serializer_class = ConsentSerializer
     queryset = Consent.objects.all()
     lookup_field = "id"
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, id=None):
         return self.retrieve(request)

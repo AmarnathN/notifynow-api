@@ -14,8 +14,8 @@ class NetflixProfileAPIView(
 ):
     serializer_class = NetflixProfileSerializer
     queryset = NetflixProfile.objects.all()
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         return self.list(request)
@@ -34,8 +34,8 @@ class NetflixProfileDetailsAPIView(
     serializer_class = NetflixProfileSerializer
     queryset = NetflixProfile.objects.all()
     lookup_field = "id"
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, id=None):
         return self.retrieve(request)
