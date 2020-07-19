@@ -196,16 +196,13 @@ html = '''<table class="m_3973256846661623402content-shell-table" width="500" ce
 
 soup = BeautifulSoup(html, 'html.parser')
 
-job_elems = soup.select('[id*="-header-copy"]')
+job_elems = soup.select('[class*="-header-copy"]')
 print("{} \n hey".format(job_elems[0].get_text().strip().replace("For ","")))
 
 
 
-job_elems = soup.select('a[href*="PRIMARY_HERO_IMAGE"]')
+job_elems = soup.select('[class*="-component-image-cell"] a')
 print(job_elems[0]['href'])
-print(job_elems[0].find('img')['src'])
-# imgs = job_elems[0].next_sibling
-# print(imgs)
-# job_elems = soup.select('a[href*="PRIMARY_HERO_IMAGE"] + img')
-# tag = job_elems
-# print(tag)
+
+job_elems = soup.select('[class*="-component-image-cell"] img')
+print(job_elems[0]['src'])
