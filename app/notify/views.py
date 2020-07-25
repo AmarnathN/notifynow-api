@@ -74,7 +74,8 @@ class NotifyView(views.APIView):
                 notifcation_img = main_link_elem.find('img')['src']
                 print("notifcation_img : {}".format(notifcation_img))
 
-                message_body = "{}\n\nDear {},\nPlease find the Netflix Show @ \n\n{}".format(mail_subject,profile,notifcation_link)
+                subject = mail_subject.replace("Fwd:","")
+                message_body = "{}\n\nDear {},\nPlease find the Netflix Show @ \n\n{}".format(subject,profile,notifcation_link)
 
                 notify_on_whatsApp = True
                 notification = Notification.objects.get(notification_type='Netflix')
@@ -82,7 +83,7 @@ class NotifyView(views.APIView):
             if "recently added on Prime Video".lower() in mail_subject.lower():
                 
                 mail_subject_elem = mail_subject.split(',')
-                profile = mail_subject_elem[0]
+                profile = mail_subject_elem[0].replace("Fwd:","")
                 print("profile : {}".format(profile))
 
                 main_link_elem = soup.select('a[href*="HE_1"]')[0]
@@ -93,7 +94,8 @@ class NotifyView(views.APIView):
                 notifcation_img = main_link_elem.find('img')['src']
                 print("notifcation_img : {}".format(notifcation_img))
 
-                message_body = "{}\n\nDear {},\nPlease find the Prime Video Show @ \n\n{}".format(mail_subject_elem[len(mail_subject_elem) - 1], profile, notifcation_link)
+                subject = mail_subject_elem[len(mail_subject_elem) - 1]
+                message_body = "{}\n\nDear {},\nPlease find the Prime Video Show @ \n\n{}".format(subject, profile, notifcation_link)
                 
                 notify_on_whatsApp = True
                 notification = Notification.objects.get(notification_type='Prime Video')
