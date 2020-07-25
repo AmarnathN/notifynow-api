@@ -1,6 +1,6 @@
 from rest_framework import views
 from rest_framework.response import Response
-from core.models import User, UserMail, ForwardMailId, Consent
+from core.models import User, UserMail, ForwardMailId, Consent, Notification
 from twilio.rest import Client
 import json
 import sys
@@ -75,7 +75,10 @@ class NotifyView(views.APIView):
                 print("notifcation_img : {}".format(notifcation_img))
 
                 message_body = "{}\n\nDear {},\nPlease find the Netflix Show @ \n\n{}".format(mail_subject,profile,notifcation_link)
+
                 notify_on_whatsApp = True
+                notification_type = Notification.objects.get(notification_type='Netflix')
+                user_whatsapp_consent =  Consent.objects.get(user=user,notification_type=notification_type).whatsapp
             
             if "recently added on Prime Video".lower() in mail_subject.lower():
                 
@@ -92,13 +95,12 @@ class NotifyView(views.APIView):
                 print("notifcation_img : {}".format(notifcation_img))
 
                 message_body = "{}\n\nDear {},\nPlease find the Prime Video Show @ \n\n{}".format(mail_subject_elem[len(mail_subject_elem) - 1], profile, notifcation_link)
+                
                 notify_on_whatsApp = True
-            
+                notification_type = Notification.objects.get(notification_type='Prime Video')
+                user_whatsapp_consent =  Consent.objects.get(user=user,notification_type=notification_type).whatsapp
             
             if notify_on_whatsApp:
-
-                user_whatsapp_consent =  Consent.objects.get(user=user).whatsapp
-
                 if user_whatsapp_consent:
                     client = Client(account_sid, auth_token)
                     message = client.messages.create(
