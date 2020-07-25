@@ -17,6 +17,15 @@ class NetflixProfileAPIView(
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+
+    def get_queryset(self):
+        """
+        This view should return a list of all
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return NetflixProfile.objects.filter(user=user)
+
     def get(self, request):
         return self.list(request)
 
@@ -37,6 +46,15 @@ class NetflixProfileDetailsAPIView(
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+
+    def get_queryset(self):
+        """
+        This view should return a list of all
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return NetflixProfile.objects.filter(user=user)
+
     def get(self, request, id=None):
         return self.retrieve(request)
 
@@ -45,3 +63,7 @@ class NetflixProfileDetailsAPIView(
 
     def delete(self, request, id):
         return self.destroy(request, id)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+        

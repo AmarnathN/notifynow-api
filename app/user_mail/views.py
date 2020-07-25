@@ -11,7 +11,7 @@ from user_mail import serializers
 
 
 class UserMailViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin
+    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin
 ):
     """ Manage database for User Mail details """
 

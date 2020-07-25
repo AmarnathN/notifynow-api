@@ -1,4 +1,4 @@
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, viewsets
 from .serializers import ConsentSerializer
 from rest_framework.authentication import (
     SessionAuthentication,
@@ -16,6 +16,14 @@ class ConsentAPIView(
     queryset = Consent.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        """
+        This view should return a list of all
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Consent.objects.filter(user=user)
 
     def get(self, request):
         return self.list(request)
@@ -36,6 +44,15 @@ class ConsentDetailsAPIView(
     lookup_field = "id"
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+    
+
+    def get_queryset(self):
+        """
+        This view should return a list of all
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Consent.objects.filter(user=user)
 
     def get(self, request, id=None):
         return self.retrieve(request)
@@ -45,3 +62,6 @@ class ConsentDetailsAPIView(
 
     def delete(self, request, id):
         return self.destroy(request, id)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)

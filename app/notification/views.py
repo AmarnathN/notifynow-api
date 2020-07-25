@@ -43,3 +43,6 @@ class NotificationDetailsAPIView(
 
     def delete(self, request, id):
         return self.destroy(request, id)
+    
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
