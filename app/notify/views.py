@@ -77,8 +77,7 @@ class NotifyView(views.APIView):
                 message_body = "{}\n\nDear {},\nPlease find the Netflix Show @ \n\n{}".format(mail_subject,profile,notifcation_link)
 
                 notify_on_whatsApp = True
-                notification_type = Notification.objects.get(notification_type='Netflix')
-                user_whatsapp_consent =  Consent.objects.get(user=user,notification_type=notification_type).whatsapp
+                notification = Notification.objects.get(notification_type='Netflix')
             
             if "recently added on Prime Video".lower() in mail_subject.lower():
                 
@@ -97,10 +96,19 @@ class NotifyView(views.APIView):
                 message_body = "{}\n\nDear {},\nPlease find the Prime Video Show @ \n\n{}".format(mail_subject_elem[len(mail_subject_elem) - 1], profile, notifcation_link)
                 
                 notify_on_whatsApp = True
-                notification_type = Notification.objects.get(notification_type='Prime Video')
-                user_whatsapp_consent =  Consent.objects.get(user=user,notification_type=notification_type).whatsapp
+                notification = Notification.objects.get(notification_type='Prime Video')
+                
             
             if notify_on_whatsApp:
+                
+                try:
+                    user_notification_consent =  Consent.objects.get(user=user,notification_type=notification)
+                    user_whatsapp_consent = user_notification_consent.whatsapp
+                except Exception as e:
+                    print(e)
+                    print("No Consents Available for user - {} and notification-type - {}".format(user.email,notification.notification_type))
+                    return Response({"success": False})
+
                 if user_whatsapp_consent:
                     client = Client(account_sid, auth_token)
                     message = client.messages.create(
