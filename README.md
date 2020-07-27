@@ -11,28 +11,28 @@ https://coggle.it/diagram/Xq15iZ_ZnDahT6H9/t/whatsapp-notify
 
 - Register the user with email and phonenumber(WhatsApp enabled): 
 
-   /api/users/create/
+   > /api/users/create/
 - Create the Token for the given user to Achieve Token Based Authentication for rest of the APIs:
 
-   /api/users/token/
+   > /api/users/token/
 
 - Consents of whether notification(i.e. like notify on whatsApp, chrome extension) is required or not is provided for the given user :
 
-   /api/consents/
+   > /api/consents/
    
   and notification types(i.e. like Netflix/Prime Video) should be defined at :
   
-   /api/notifications/
+   > /api/notifications/
    
 - Once the user set up is done , we need to setup the Gmail- emails auto forward to user **vayu@notifynow.in** using following email filters 
 
   please import the following filters 
   
-    
+   > https://github.com/AmarnathN/notifynow-api/blob/master/GmailFilters.xml
   
   The email auto-forward email code can be received from follwoing end point, which captures all the mails received by the user
   
-   /api/user_mails/
+   > /api/user_mails/
 
 - Then user with given whatsapp number while registering should subscribe to the whatsApp notification sending "join knew-signal" message to our WhatsApp account :
 
